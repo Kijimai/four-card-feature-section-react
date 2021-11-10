@@ -42,7 +42,6 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-  min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
 }
@@ -88,8 +87,8 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-.grid {
-  display: grid;
+.flex {
+  display: flex;
 }
 
 .header {
@@ -106,6 +105,12 @@ body {
     }
   }
 
+  @media screen and (min-width: 600px) {
+    .title-hook {
+      font-size: 3.6rem;
+    }
+  }
+
   p {
     font-size: 1.5rem;
   }
@@ -116,7 +121,9 @@ body {
 }
 
 .card-container {
-  margin: 7.6rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 7.6rem auto;
   gap: 2rem;
 
   .card-item {
@@ -126,7 +133,9 @@ body {
     background-color: hsl(var(--color-white));
     border-radius: 0.8rem;
     box-shadow: 0 1.5rem 3rem -1.1rem hsl(var(--color-dark) / 0.5);
-
+    max-width: 35rem;
+    min-width: 31rem;
+    width: 100%;
     h2 {
       font-size: 2rem;
     }
@@ -161,10 +170,9 @@ body {
 
 @media screen and (min-width: 600px) {
   .card-container {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    margin: 7.6rem 0;
-    gap: 2rem;
+    margin: 7.6rem auto;
+    gap: 3rem;
+    max-width: 115rem;
 
     .card-item {
       animation: 0.5s fadeIn linear;
@@ -173,7 +181,6 @@ body {
       background-color: hsl(var(--color-white));
       border-radius: 0.8rem;
       box-shadow: 0 1.5rem 3rem -1.1rem hsl(var(--color-dark) / 0.5);
-
       h2 {
         font-size: 2rem;
       }
@@ -190,22 +197,105 @@ body {
     }
 
     & > :nth-child(1) {
-      animation: 1s fadeInRight ease;
+      grid-row: 2 / 2;
+      border-top-color: hsl(var(--color-cyan));
     }
 
     & > :nth-child(2) {
-      animation: 1s fadeInTop ease;
+      grid-column: 2 / 2;
+      border-top-color: hsl(var(--color-red));
     }
 
     & > :nth-child(3) {
-      animation: 1s fadeInBottom ease;
+      grid-column: 2 / 2;
+      border-top-color: hsl(var(--color-orange));
     }
 
     & > :nth-child(4) {
-      animation: 1s fadeInLeft ease;
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      border-top-color: hsl(var(--color-blue));
     }
   }
 }
+
+@media screen and (min-width: 1174px) {
+  .card-container {
+    & > :nth-child(1) {
+      transition: transform 0.5s ease;
+      transform: perspective(35rem) rotateY(5deg) translateY(50%);
+    }
+
+    & > :nth-child(1):hover {
+      transition: transform 0.5s ease;
+      transform: perspective(35rem) rotateY(0) translateY(50%);
+    }
+
+    & > :nth-child(3) {
+      order: 2;
+      transition: transform 0.5s ease;
+      transform: perspective(35rem) rotateX(5deg);
+    }
+
+    & > :nth-child(3):hover {
+      transform: perspective(35rem) rotateY(0);
+    }
+
+    & > :nth-child(2) {
+      transition: transform 0.5s ease;
+      transform: perspective(35rem) rotateX(-5deg);
+    }
+
+    & > :nth-child(2):hover {
+      transition: transform 0.5s ease;
+      transform: perspective(35rem) rotateY(0);
+    }
+
+    & > :nth-child(4) {
+      order: 1;
+      transition: transform 0.5s ease;
+      transform: perspective(35rem) rotateY(-5deg) translateY(50%);
+    }
+
+    & > :nth-child(4):hover {
+      transform: perspective(35rem) rotateY(0) translateY(50%);
+    }
+  }
+}
+
+footer {
+  text-align: center;
+  font-size: 1.8rem;
+
+  .footer-link {
+    padding: 0 0.5rem;
+    color: hsl(var(--color-blue));
+    position: relative;
+    text-decoration: none;
+  }
+
+  .footer-link::after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+    bottom: 0;
+    left: 0;
+    background-color: hsl(var(--color-orange));
+    height: 0.2rem;
+    width: 100%;
+    transform-origin: center;
+    transform: scale(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .footer-link:focus::after,
+  .footer-link:hover::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Animations
 
 @keyframes fadeIn {
   from {
@@ -213,47 +303,5 @@ body {
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    transform: translateX(-10rem);
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInTop {
-  from {
-    transform: translateY(-10rem);
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes fadeInBottom {
-  from {
-    transform: translateY(10rem);
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes fadeInLeft {
-  from {
-    transform: translateX(10rem);
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
